@@ -140,6 +140,20 @@ void CartesianTree::printLevels() {
 	}
 }
 
+// Destructor to delete the Cartesian tree
+void CartesianTree::destroyTree(Node* root) {
+    if (root != nullptr) {
+        destroyTree(root->left);
+        destroyTree(root->right);
+        delete root;
+    }
+}
+
+// Custom destructor to delete the Cartesian tree
+CartesianTree::~CartesianTree() {
+    destroyTree(root);
+}
+
 // Function to validate the CartesianTree by creating a new tree and calling build and validate function
 bool validateTrees(int numValidations, int maxElements) {
 	for (int i = 0; i < numValidations; ++i) {

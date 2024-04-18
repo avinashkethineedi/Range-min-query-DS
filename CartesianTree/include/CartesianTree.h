@@ -21,11 +21,12 @@ private:
 	Node* insert(Node* root, int value);
 	void inorderTraversal(Node* root, std::vector<int>& result);
 	void inorderTraversal(Node* root);
+	void destroyTree(Node* root); // Custom destructor to delete the Cartesian tree
 
 public:
 	CartesianTree();
 	CartesianTree(const std::vector<int>& elements); // Constructor to build tree from vector
-	~CartesianTree() = default; // Destructor
+	~CartesianTree();
 	void addElement(int value);
 	std::vector<int> getElementsInOrder();
 	bool buildAndCheck(int numElements);
