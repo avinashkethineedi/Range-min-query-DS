@@ -10,7 +10,7 @@ int main(int argc, char* argv[]) {
 	int numValidations = std::stoi(argv[1]);
 	int maxElements = std::stoi(argv[2]);
 
-	srand(time(nullptr));
+	srand(10);//time(nullptr));
 
 	bool isValid = validateTrees(numValidations, maxElements);
 
@@ -34,6 +34,10 @@ int main(int argc, char* argv[]) {
 
 	std::cout << "Tree (Level by level traversal):" << std::endl;
 	tree.printLevels();
+
+	// Print the Euler tour traversal sequence
+    std::cout << "\nEuler Tour Traversal Sequence: ";
+    tree.printEulerTour();
 
 	// Create a Cartesian tree from a randomly generated vector
 	std::vector<int> elements;

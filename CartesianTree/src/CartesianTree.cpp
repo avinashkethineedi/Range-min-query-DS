@@ -154,6 +154,54 @@ CartesianTree::~CartesianTree() {
     destroyTree(root);
 }
 
+// Helper function for Euler tour traversal
+void CartesianTree::eulerTourTraversal(Node* root) {
+    if (root != nullptr) {
+        std::cout << root->data << " "; // Visit current node
+        
+        if (root->left != nullptr) {
+            eulerTourTraversal(root->left); // Visit left subtree
+            std::cout << root->data << " "; // Visit current node again
+        }
+        
+        if (root->right != nullptr) {
+            eulerTourTraversal(root->right); // Visit right subtree
+            std::cout << root->data << " "; // Visit current node again
+        }
+    }
+}
+
+// Helper function for Euler tour traversal
+void CartesianTree::eulerTourTraversal(Node* root, std::vector<int>& result) {
+    if (root != nullptr) {
+        result.push_back(root->data); // Visit current node
+        
+        if (root->left != nullptr) {
+            eulerTourTraversal(root->left, result); // Visit left subtree
+            result.push_back(root->data); // Visit current node again
+        }
+        
+        if (root->right != nullptr) {
+            eulerTourTraversal(root->right, result); // Visit right subtree
+            result.push_back(root->data); // Visit current node again
+        }
+    }
+}
+
+// Function to perform Euler tour traversal
+std::vector<int> CartesianTree::eulerTour() {
+    std::vector<int> result;
+    eulerTourTraversal(root, result);
+    return result;
+}
+
+// Function to print the Euler tour traversal sequence
+void CartesianTree::printEulerTour() {
+    std::cout << "Euler Tour Traversal Sequence: ";
+    eulerTourTraversal(root);
+    std::cout << std::endl;
+}
+
 // Function to validate the CartesianTree by creating a new tree and calling build and validate function
 bool validateTrees(int numValidations, int maxElements) {
 	for (int i = 0; i < numValidations; ++i) {
