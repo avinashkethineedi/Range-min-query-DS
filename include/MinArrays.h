@@ -15,6 +15,14 @@ public:
 	MinArrays(int size);
 	MinArrays(int size, const std::vector<int>& values);
 	MinArrays(const std::vector<int>& values);
+
+	// Special member functions
+    MinArrays(const MinArrays& other) = default; // Default copy constructor
+    MinArrays& operator=(const MinArrays& other) = default; // Default copy assignment operator
+    MinArrays(MinArrays&& other) noexcept = default; // Default move constructor
+    MinArrays& operator=(MinArrays&& other) noexcept = default; // Default move assignment operator
+    ~MinArrays() = default; // Default destructor
+
 	void fillFirstArray(const std::vector<int>& values);
 	void randomizeFirstArray();
 	void calculateRemainingArrays();
