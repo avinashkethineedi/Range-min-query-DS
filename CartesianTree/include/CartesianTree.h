@@ -24,6 +24,7 @@ private:
 
 public:
 	CartesianTree();
+	CartesianTree(const std::vector<int>& elements); // Constructor to build tree from vector
 	~CartesianTree() = default; // Destructor
 	void addElement(int value);
 	std::vector<int> getElementsInOrder();

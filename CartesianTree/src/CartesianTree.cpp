@@ -65,6 +65,13 @@ void CartesianTree::inorderTraversal(Node* root) {
 // Constructor
 CartesianTree::CartesianTree() : root(nullptr), rightmost(nullptr) {}
 
+// Constructor to build tree from vector
+CartesianTree::CartesianTree(const std::vector<int>& elements) : root(nullptr), rightmost(nullptr) {
+	for (int elem : elements) {
+		addElement(elem);
+	}
+}
+
 // Function to add a new element to the Cartesian tree
 void CartesianTree::addElement(int value) {
 	root = insert(root, value);

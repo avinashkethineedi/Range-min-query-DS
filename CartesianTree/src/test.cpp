@@ -22,19 +22,34 @@ int main(int argc, char* argv[]) {
 
 	// Create a Cartesian tree with some random number of elements
 	CartesianTree tree;
-	int numElements = 10;
+	int numElements = 10;//rand() % 10 + 1; // Random number of elements (1 to 10)
 	for (int i = 0; i < numElements; ++i) {
 		int randomValue = rand() % 100;
 		tree.addElement(randomValue);
 	}
 
 	// Print the Cartesian tree
-	std::cout << "Tree (Inorder traversal): ";
+	std::cout << "\nTree (Inorder traversal): ";
 	tree.printTree();
-	std::cout << std::endl;
 
 	std::cout << "Tree (Level by level traversal):" << std::endl;
 	tree.printLevels();
+
+	// Create a Cartesian tree from a randomly generated vector
+	std::vector<int> elements;
+	numElements = 10;//rand() % 10 + 1; // Random number of elements (1 to 10)
+	for (int i = 0; i < numElements; ++i) {
+		int randomValue = rand() % 100;
+		elements.push_back(randomValue);
+	}
+	CartesianTree treeFromVector(elements);
+
+	// Print the Cartesian tree created from the vector
+	std::cout << "\nTree from vector (Inorder traversal): ";
+	treeFromVector.printTree();
+
+	std::cout << "Tree from vector (Level by level traversal):" << std::endl;
+	treeFromVector.printLevels();
 
 	return 0;
 }
