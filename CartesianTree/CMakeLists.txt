@@ -1,8 +1,12 @@
 cmake_minimum_required(VERSION 3.10)
-project(CartesianTree)
+project(CartesianTreeLibrary)
 
+# Set C++ standard
 set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-include_directories(include)
+# Add CartesianTree.cpp to create a library
+add_library(cartesian_tree INTERFACE)
 
-add_executable(CartesianTree src/test.cpp src/CartesianTree.cpp)
+# Specify include directories for the library target
+target_include_directories(cartesian_tree INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
