@@ -1,8 +1,15 @@
 cmake_minimum_required(VERSION 3.10)
-project(MinArrays)
+project(MinArraysLibrary)
 
+# Set C++ standard
 set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-include_directories(include)
+# Source files
+set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/MinArrays.cpp)
 
-add_executable(test src/test.cpp src/MinArrays.cpp)
+# Create a library target
+add_library(MinArrays ${SOURCES})
+
+# Specify include directory for the library target
+target_include_directories(MinArrays PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)

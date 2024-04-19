@@ -5,8 +5,11 @@ project(CartesianTreeLibrary)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Add CartesianTree.cpp to create a library
-add_library(cartesian_tree INTERFACE)
+# Source files
+set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/CartesianTree.cpp)
 
-# Specify include directories for the library target
+# Create a library target
+add_library(cartesian_tree ${SOURCES})
+
+# Specify include directory for the library target
 target_include_directories(cartesian_tree INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)

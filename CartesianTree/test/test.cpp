@@ -1,7 +1,7 @@
 #include <iostream>
 #include "CartesianTree.h"
 
-int main(int argc, char* argv[]) {
+int main(int argc, char** argv) {
 	if (argc != 3) {
 		std::cerr << "Usage: " << argv[0] << " <numValidations> <maxElements>" << std::endl;
 		return 1;
@@ -36,8 +36,7 @@ int main(int argc, char* argv[]) {
 	tree.printLevels();
 
 	// Print the Euler tour traversal sequence
-    std::cout << "\nEuler Tour Traversal Sequence: ";
-    tree.printEulerTour();
+	tree.printEulerTour();
 
 	// Create a Cartesian tree from a randomly generated vector
 	std::vector<int> elements;
@@ -54,6 +53,9 @@ int main(int argc, char* argv[]) {
 
 	std::cout << "Tree from vector (Level by level traversal):" << std::endl;
 	treeFromVector.printLevels();
+
+	// Print the Euler tour traversal sequence
+	treeFromVector.printEulerTour();
 
 	return 0;
 }
