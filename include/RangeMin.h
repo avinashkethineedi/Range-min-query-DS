@@ -2,14 +2,16 @@
 #define RANGEMIN_H
 
 #include <vector>
+#include "MinArrays.h"
 
 class RangeMin {
 private:
-	std::vector<int> arr; // Array to store elements
 	unsigned int n; // Size of the array
+	std::vector<int> arr; // Array to store elements
+	std::vector<int> minInWindow; // Vector to store minimum value in each window
 	unsigned int windowSize; // Size of each window
 	unsigned int numWindows; // Number of windows
-	std::vector<int> minInWindow; // Vector to store minimum value in each window
+	MinArrays minArrays; // MinArrays object to store and compute minimum values in the range of two window
 
 	// Helper function to fill the array with random elements
 	void fillRandomly();
@@ -36,6 +38,9 @@ public:
 
 	// Function to get the minimum value in each window
 	std::vector<int> getMinInWindow() const;
+
+	// Function to validate the minArrays object
+	void validate() const;
 };
 
 #endif /* RANGEMIN_H */

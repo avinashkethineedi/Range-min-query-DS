@@ -24,5 +24,7 @@ int main(int argc, char *argv[]) {
 
 	// rangeMin.printMinInWindow();
 
+	rangeMin.validate();
+
 	return 0;
 }

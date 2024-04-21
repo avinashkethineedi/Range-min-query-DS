@@ -12,6 +12,7 @@ RangeMin::RangeMin(unsigned int size) {
 	windowSize = static_cast<unsigned int>(std::log2(n) / 4); // Calculate window size as one-quarter of log2(n)
 	numWindows = static_cast<unsigned int>(std::ceil(static_cast<double>(n) / windowSize)); // Calculate the number of windows
 	findMinInWindows(); // Find the minimum value in each window
+	minArrays = std::move(MinArrays(minInWindow)); // Using move assignment operator for MinArrays
 }
 
 RangeMin::RangeMin(const std::vector<int>& values) {
@@ -20,6 +21,7 @@ RangeMin::RangeMin(const std::vector<int>& values) {
 	windowSize = static_cast<unsigned int>(std::log2(n) / 4); // Calculate window size as one-quarter of log2(n)
 	numWindows = static_cast<unsigned int>(std::ceil(static_cast<double>(n) / windowSize)); // Calculate the number of windows
 	findMinInWindows(); // Find the minimum value in each window
+	minArrays = std::move(MinArrays(minInWindow)); // Using move assignment operator for MinArrays
 }
 
 void RangeMin::fillRandomly() {
@@ -62,4 +64,9 @@ unsigned int RangeMin::getNumWindows() const {
 
 std::vector<int> RangeMin::getMinInWindow() const {
 	return minInWindow;
+}
+
+void RangeMin::validate() const {
+    int numTests = 100000;//rand();
+	minArrays.validateFunctions(numTests);
 }

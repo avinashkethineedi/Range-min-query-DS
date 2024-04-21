@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 project(RangeMin)
 
 # Set C++ standard
@@ -16,3 +16,7 @@ add_executable(RangeMin ${SOURCES})
 
 # Include directories
 target_include_directories(RangeMin PUBLIC include)
+
+# Link MinArrays library
+add_subdirectory(MinArrays)
+target_link_libraries(RangeMin MinArrays)
