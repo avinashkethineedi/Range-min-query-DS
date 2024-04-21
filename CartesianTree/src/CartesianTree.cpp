@@ -45,7 +45,7 @@ Node* CartesianTree::insert(Node* root, int value) {
 }
 
 // Helper function to perform inorder traversal and fill elements into a vector
-void CartesianTree::inorderTraversal(Node* root, std::vector<int>& result) {
+void CartesianTree::inorderTraversal(Node* root, std::vector<int>& result) const {
 	if (root != nullptr) {
 		inorderTraversal(root->left, result);
 		result.push_back(root->data);
@@ -54,7 +54,7 @@ void CartesianTree::inorderTraversal(Node* root, std::vector<int>& result) {
 }
 
 // Helper function to print the Cartesian tree in inorder traversal
-void CartesianTree::inorderTraversal(Node* root) {
+void CartesianTree::inorderTraversal(Node* root) const {
 	if (root != nullptr) {
 		inorderTraversal(root->left);
 		std::cout << root->data << " ";
@@ -78,7 +78,7 @@ void CartesianTree::addElement(int value) {
 }
 
 // Function to return all elements in the tree in a vector after inorder traversal
-std::vector<int> CartesianTree::getElementsInOrder() {
+std::vector<int> CartesianTree::getElementsInOrder() const {
 	std::vector<int> result;
 	inorderTraversal(root, result);
 	return result;
@@ -112,13 +112,13 @@ bool CartesianTree::buildAndCheck(int numElements) {
 }
 
 // Function to print the Cartesian tree in inorder traversal
-void CartesianTree::printTree() {
+void CartesianTree::printTree() const {
 	inorderTraversal(root);
 	std::cout << std::endl;
 }
 
 // Function to print the Cartesian tree level by level
-void CartesianTree::printLevels() {
+void CartesianTree::printLevels() const {
 	if (root == nullptr)
 		return;
 
@@ -142,64 +142,97 @@ void CartesianTree::printLevels() {
 
 // Destructor to delete the Cartesian tree
 void CartesianTree::destroyTree(Node* root) {
-    if (root != nullptr) {
-        destroyTree(root->left);
-        destroyTree(root->right);
-        delete root;
-    }
+	if (root != nullptr) {
+		destroyTree(root->left);
+		destroyTree(root->right);
+		delete root;
+	}
 }
 
 // Custom destructor to delete the Cartesian tree
 CartesianTree::~CartesianTree() {
-    destroyTree(root);
+	destroyTree(root);
 }
 
 // Helper function for Euler tour traversal
-void CartesianTree::eulerTourTraversal(Node* root) {
-    if (root != nullptr) {
-        std::cout << root->data << " "; // Visit current node
-        
-        if (root->left != nullptr) {
-            eulerTourTraversal(root->left); // Visit left subtree
-            std::cout << root->data << " "; // Visit current node again
-        }
-        
-        if (root->right != nullptr) {
-            eulerTourTraversal(root->right); // Visit right subtree
-            std::cout << root->data << " "; // Visit current node again
-        }
-    }
+void CartesianTree::eulerTourTraversal(Node* root) const {
+	if (root != nullptr) {
+		std::cout << root->data << " "; // Visit current node
+		
+		if (root->left != nullptr) {
+			eulerTourTraversal(root->left); // Visit left subtree
+			std::cout << root->data << " "; // Visit current node again
+		}
+		
+		if (root->right != nullptr) {
+			eulerTourTraversal(root->right); // Visit right subtree
+			std::cout << root->data << " "; // Visit current node again
+		}
+	}
 }
 
 // Helper function for Euler tour traversal
-void CartesianTree::eulerTourTraversal(Node* root, std::vector<int>& result) {
-    if (root != nullptr) {
-        result.push_back(root->data); // Visit current node
-        
-        if (root->left != nullptr) {
-            eulerTourTraversal(root->left, result); // Visit left subtree
-            result.push_back(root->data); // Visit current node again
-        }
-        
-        if (root->right != nullptr) {
-            eulerTourTraversal(root->right, result); // Visit right subtree
-            result.push_back(root->data); // Visit current node again
-        }
-    }
+void CartesianTree::eulerTourTraversal(Node* root, std::vector<int>& result) const {
+	if (root != nullptr) {
+		result.push_back(root->data); // Visit current node
+		
+		if (root->left != nullptr) {
+			eulerTourTraversal(root->left, result); // Visit left subtree
+			result.push_back(root->data); // Visit current node again
+		}
+		
+		if (root->right != nullptr) {
+			eulerTourTraversal(root->right, result); // Visit right subtree
+			result.push_back(root->data); // Visit current node again
+		}
+	}
+}
+
+// Helper function to add encoded sequences during Euler tour traversal
+void CartesianTree::addEncodedSequence(Node* root, std::vector<int>& result) const {
+	if (root != nullptr) {
+		if (root->left != nullptr) {
+			result.push_back(1); // Encode path down as 1
+			addEncodedSequence(root->left, result); // Visit left subtree
+			result.push_back(0); // Encode path up as 0
+		}
+
+		if (root->right != nullptr) {
+			result.push_back(1); // Encode path down as 1
+			addEncodedSequence(root->right, result); // Visit right subtree
+			result.push_back(0); // Encode path up as 0
+		}
+	}
 }
 
 // Function to perform Euler tour traversal
-std::vector<int> CartesianTree::eulerTour() {
-    std::vector<int> result;
-    eulerTourTraversal(root, result);
-    return result;
+std::vector<int> CartesianTree::eulerTour() const {
+	std::vector<int> result;
+	eulerTourTraversal(root, result);
+	return result;
 }
 
 // Function to print the Euler tour traversal sequence
-void CartesianTree::printEulerTour() {
-    std::cout << "Euler Tour Traversal Sequence: ";
-    eulerTourTraversal(root);
-    std::cout << std::endl;
+void CartesianTree::printEulerTour() const {
+	std::cout << "Euler Tour Traversal Sequence: ";
+	eulerTourTraversal(root);
+	std::cout << std::endl;
+}
+
+// Function to encode the Euler tour traversal
+std::vector<int> CartesianTree::encodeEulerTour() const {
+	std::vector<int> result;
+	addEncodedSequence(root, result);
+	return result;
+}
+
+// Function to print the encoded Euler tour
+void CartesianTree::printEncodedEulerTour() const {
+	std::vector<int> encodedTour = encodeEulerTour();
+	for (int value : encodedTour) {
+		std::cout << value << " ";
+	}
+	std::cout << std::endl;
 }
 
 // Function to validate the CartesianTree by creating a new tree and calling build and validate function

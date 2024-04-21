@@ -21,12 +21,13 @@ int main(int argc, char** argv) {
 	}
 
 	// Create a Cartesian tree with some random number of elements
-	CartesianTree tree;
+	// CartesianTree tree;
 	int numElements = 10;//rand() % 10 + 1; // Random number of elements (1 to 10)
-	for (int i = 0; i < numElements; ++i) {
-		int randomValue = rand() % 100;
-		tree.addElement(randomValue);
-	}
+	// for (int i = 0; i < numElements; ++i) {
+	// 	int randomValue = rand() % 100;
+	// 	tree.addElement(randomValue);
+	// }
+	CartesianTree tree({3, 2, 1, 8, 5, 9, 7, 12, 4, 6, 10, 7, 11, 12});
 
 	// Print the Cartesian tree
 	std::cout << "\nTree (Inorder traversal): ";
@@ -37,6 +38,9 @@ int main(int argc, char** argv) {
 
 	// Print the Euler tour traversal sequence
 	tree.printEulerTour();
+
+	// Print the encoded Euler tour
+	tree.printEncodedEulerTour();
 
 	// Create a Cartesian tree from a randomly generated vector
 	std::vector<int> elements;
@@ -56,6 +60,9 @@ int main(int argc, char** argv) {
 
 	// Print the Euler tour traversal sequence
 	treeFromVector.printEulerTour();
+
+	// Print the encoded Euler tour
+	treeFromVector.printEncodedEulerTour();
 
 	return 0;
 }
