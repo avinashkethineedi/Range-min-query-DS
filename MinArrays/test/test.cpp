@@ -11,8 +11,6 @@ int main(int argc, char** argv) {
 	int numTests = std::stoi(argv[2]);
 
 	MinArrays minArrays(size);
-	minArrays.randomizeFirstArray();
-	minArrays.calculateRemainingArrays();
 	// minArrays.printArrays();
 	minArrays.validateFunctions(numTests);
 
