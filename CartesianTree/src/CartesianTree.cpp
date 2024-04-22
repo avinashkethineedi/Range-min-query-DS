@@ -152,6 +152,14 @@ CartesianTree::CartesianTree(const std::vector<int>& elements) : root(nullptr), 
 	}
 }
 
+// Constructor to build tree from vector iterators
+CartesianTree::CartesianTree(std::vector<int>::const_iterator begin, std::vector<int>::const_iterator end) : root(nullptr), rightmost(nullptr), size(0) {
+	while (begin != end) {
+		addElement(*begin);
+		++begin;
+	}
+}
+
 // Custom destructor to delete the Cartesian tree
 CartesianTree::~CartesianTree() {
 	destroyTree(root);

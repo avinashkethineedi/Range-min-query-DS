@@ -31,6 +31,7 @@ private:
 public:
 	CartesianTree();
 	CartesianTree(const std::vector<int>& elements);
+	CartesianTree(std::vector<int>::const_iterator begin, std::vector<int>::const_iterator end);
 	~CartesianTree();
 	void addElement(int value);
 	std::vector<int> getElementsInOrder() const;

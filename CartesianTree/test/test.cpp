@@ -52,7 +52,7 @@ int main(int argc, char** argv) {
 		int randomValue = rand() % 100;
 		elements.push_back(randomValue);
 	}
-	CartesianTree treeFromVector(elements);
+	CartesianTree treeFromVector(elements.begin()+4, elements.end());//(elements);
 
 	// Print the Cartesian tree created from the vector
 	std::cout << "\nTree from vector (Inorder traversal): ";

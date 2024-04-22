@@ -12,4 +12,4 @@ set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/CartesianTree.cpp)
 add_library(cartesian_tree ${SOURCES})
 
 # Specify include directory for the library target
-target_include_directories(cartesian_tree INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(cartesian_tree PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
