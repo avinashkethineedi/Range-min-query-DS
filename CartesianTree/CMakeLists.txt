@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/CartesianTree.cpp)
 
 # Create a library target
-add_library(cartesian_tree ${SOURCES})
+add_library(CartesianTree ${SOURCES})
 
 # Specify include directory for the library target
-target_include_directories(cartesian_tree PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(CartesianTree PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)

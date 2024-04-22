@@ -20,3 +20,7 @@ target_include_directories(RangeMin PUBLIC include)
 # Link MinArrays library
 add_subdirectory(MinArrays)
 target_link_libraries(RangeMin MinArrays)
+
+# Link CartesianTree library
+add_subdirectory(CartesianTree)
+target_link_libraries(RangeMin CartesianTree)
