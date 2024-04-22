@@ -24,6 +24,8 @@ int main(int argc, char *argv[]) {
 
 	// rangeMin.printMinInWindow();
 
+	rangeMin.printWindowIndices(rangeMin.getNumWindows()-1);
+
 	rangeMin.validate();
 
 	return 0;

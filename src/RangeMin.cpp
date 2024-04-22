@@ -13,6 +13,7 @@ RangeMin::RangeMin(unsigned int size) {
 	numWindows = static_cast<unsigned int>(std::ceil(static_cast<double>(n) / windowSize)); // Calculate the number of windows
 	findMinInWindows(); // Find the minimum value in each window
 	minArrays = std::move(MinArrays(minInWindow)); // Using move assignment operator for MinArrays
+	computeWindowETTourIndices(); // Compute the Euler tour indices location pairs for each window
 }
 
 RangeMin::RangeMin(const std::vector<int>& values) {
@@ -22,6 +23,7 @@ RangeMin::RangeMin(const std::vector<int>& values) {
 	numWindows = static_cast<unsigned int>(std::ceil(static_cast<double>(n) / windowSize)); // Calculate the number of windows
 	findMinInWindows(); // Find the minimum value in each window
 	minArrays = std::move(MinArrays(minInWindow)); // Using move assignment operator for MinArrays
+	computeWindowETTourIndices(); // Compute the Euler tour indices location pairs for each window
 }
 
 void RangeMin::fillRandomly() {
@@ -67,6 +69,46 @@ std::vector<int> RangeMin::getMinInWindow() const {
 }
 
 void RangeMin::validate() const {
-    int numTests = 100000;//rand();
+	int numTests = 100000;//rand();
 	minArrays.validateFunctions(numTests);
+}
+
+// Function to compute the Euler tour indices location pairs for each window
+void RangeMin::computeWindowETTourIndices() {
+	windowTourIndices.resize(numWindows); // Resize the vector to hold location pairs for each window
+
+	// Iterate through each window
+	for (unsigned int i = 0; i < numWindows; ++i) {
+		// Calculate the start index of the current window
+		unsigned int windowStartIndex = i * windowSize;
+
+		// Create a new Cartesian tree for the current window
+		CartesianTree cartesianTree(arr.begin() + windowStartIndex, arr.begin() + windowStartIndex + windowSize);
+
+		// Get the appearance locations of nodes in the Cartesian tree
+		std::vector<std::pair<int, int>> locationPairs = cartesianTree.getAppearanceLocations();
+
+		// Store the appearance locations of the current window
+		windowTourIndices[i] = std::move(locationPairs);
+	}
+}
+
+void RangeMin::printWindowIndices(unsigned int windowIndex) const {
+	if (windowIndex >= numWindows) {
+		std::cerr << "Error: Window index out of range." << std::endl;
+		return;
+	}
+
+	std::cout << "Window " << windowIndex << ":" << std::endl;
+	std::cout << "Window Elements: ";
+	for (unsigned int j = 0; j < windowSize; ++j) {
+		std::cout << arr[windowIndex * windowSize + j] << " ";
+	}
+	std::cout << std::endl;
+
+	std::cout << "Window Euler Tour Indices: ";
+	for (const auto& pair : windowTourIndices[windowIndex]) {
+		std::cout << "(" << pair.first << ", " << pair.second << ") ";
+	}
+	std::cout << std::endl;
 }

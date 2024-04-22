@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "MinArrays.h"
+#include "CartesianTree.h" // Include CartesianTree header for using its data structures
 
 class RangeMin {
 private:
@@ -12,12 +13,16 @@ private:
 	unsigned int windowSize; // Size of each window
 	unsigned int numWindows; // Number of windows
 	MinArrays minArrays; // MinArrays object to store and compute minimum values in the range of two window
+	std::vector<std::vector<std::pair<int, int>>> windowTourIndices; // Vector to store location pairs in Euler tour for each window
 
 	// Helper function to fill the array with random elements
 	void fillRandomly();
 
 	// Helper function to find the minimum value in each window
 	void findMinInWindows();
+
+	// Function to compute the Euler tour indices location pairs for each window
+	void computeWindowETTourIndices();
 
 public:
 	// Constructors
@@ -41,6 +46,8 @@ public:
 
 	// Function to validate the minArrays object
 	void validate() const;
+
+	void printWindowIndices(unsigned int windowIndex) const;
 };
 
 #endif /* RANGEMIN_H */
