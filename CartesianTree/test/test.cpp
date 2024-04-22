@@ -42,6 +42,9 @@ int main(int argc, char** argv) {
 	// Print the encoded Euler tour
 	tree.printEncodedEulerTour();
 
+	// Print the vector of pairs
+	tree.printAppearanceLocations();
+
 	// Create a Cartesian tree from a randomly generated vector
 	std::vector<int> elements;
 	numElements = 10;//rand() % 10 + 1; // Random number of elements (1 to 10)
@@ -64,5 +67,8 @@ int main(int argc, char** argv) {
 	// Print the encoded Euler tour
 	treeFromVector.printEncodedEulerTour();
 
+	// Print the vector of pairs
+	tree.printAppearanceLocations();
+	
 	return 0;
 }

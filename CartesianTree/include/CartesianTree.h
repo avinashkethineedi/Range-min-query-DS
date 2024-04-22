@@ -17,14 +17,16 @@ class CartesianTree {
 private:
 	Node* root;
 	Node* rightmost; // Pointer to the rightmost node in the tree
+	int size; // Variable to hold the size of the Cartesian tree
 
 	Node* insert(Node* root, int value);
-	void inorderTraversal(Node* root, std::vector<int>& result) const;
 	void inorderTraversal(Node* root) const;
-	void destroyTree(Node* root); // Custom destructor to delete the Cartesian tree
+	void inorderTraversal(Node* root, std::vector<int>& result) const;
 	void eulerTourTraversal(Node* root) const;
 	void eulerTourTraversal(Node* root, std::vector<int>& result) const;
 	void addEncodedSequence(Node* root, std::vector<int>& result) const;
+	void calculateAppearanceLocations(Node* root, int &index, std::vector<std::pair<int, int>>& appearanceLocations) const;
+	void destroyTree(Node* root); // Custom destructor to delete the Cartesian tree
 
 public:
 	CartesianTree();
@@ -39,6 +41,8 @@ public:
 	void printEulerTour() const;
 	std::vector<int> encodeEulerTour() const; // Function to encode the Euler tour traversal
 	void printEncodedEulerTour() const; // Function to print the encoded Euler tour
+	std::vector<std::pair<int, int>> getAppearanceLocations() const;
+	void printAppearanceLocations() const;
 };
 
 bool validateTrees(int numValidations, int maxElements);

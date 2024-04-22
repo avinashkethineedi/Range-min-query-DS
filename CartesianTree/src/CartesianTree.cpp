@@ -44,15 +44,6 @@ Node* CartesianTree::insert(Node* root, int value) {
 	return root;
 }
 
-// Helper function to perform inorder traversal and fill elements into a vector
-void CartesianTree::inorderTraversal(Node* root, std::vector<int>& result) const {
-	if (root != nullptr) {
-		inorderTraversal(root->left, result);
-		result.push_back(root->data);
-		inorderTraversal(root->right, result);
-	}
-}
-
 // Helper function to print the Cartesian tree in inorder traversal
 void CartesianTree::inorderTraversal(Node* root) const {
 	if (root != nullptr) {
@@ -62,96 +53,13 @@ void CartesianTree::inorderTraversal(Node* root) const {
 	}
 }
 
-// Constructor
-CartesianTree::CartesianTree() : root(nullptr), rightmost(nullptr) {}
-
-// Constructor to build tree from vector
-CartesianTree::CartesianTree(const std::vector<int>& elements) : root(nullptr), rightmost(nullptr) {
-	for (int elem : elements) {
-		addElement(elem);
-	}
-}
-
-// Function to add a new element to the Cartesian tree
-void CartesianTree::addElement(int value) {
-	root = insert(root, value);
-}
-
-// Function to return all elements in the tree in a vector after inorder traversal
-std::vector<int> CartesianTree::getElementsInOrder() const {
-	std::vector<int> result;
-	inorderTraversal(root, result);
-	return result;
-}
-
-// Function to build a vector of random elements, add them to the Cartesian tree,
-// retrieve elements from the inorder traversal, and check if they match the initial vector
-bool CartesianTree::buildAndCheck(int numElements) {
-	std::vector<int> randomElements;
-	for (int i = 0; i < numElements; ++i) {
-		int randomValue = rand() % 100;
-		randomElements.push_back(randomValue);
-	}
-
-	for (int elem : randomElements) {
-		addElement(elem);
-	}
-
-	std::vector<int> inorderElements = getElementsInOrder();
-
-	if (randomElements.size() != inorderElements.size()) {
-		return false;
-	}
-	for (int i = 0; i < randomElements.size(); ++i) {
-		if (randomElements[i] != inorderElements[i]) {
-			return false;
-		}
-	}
-
-	return true;
-}
-
-// Function to print the Cartesian tree in inorder traversal
-void CartesianTree::printTree() const {
-	inorderTraversal(root);
-	std::cout << std::endl;
-}
-
-// Function to print the Cartesian tree level by level
-void CartesianTree::printLevels() const {
-	if (root == nullptr)
-		return;
-
-	std::queue<Node*> q;
-	q.push(root);
-
-	while (!q.empty()) {
-		int levelSize = q.size();
-		for (int i = 0; i < levelSize; ++i) {
-			Node* node = q.front();
-			q.pop();
-			std::cout << node->data << " ";
-			if (node->left != nullptr)
-				q.push(node->left);
-			if (node->right != nullptr)
-				q.push(node->right);
-		}
-		std::cout << std::endl;
-	}
-}
-
-// Destructor to delete the Cartesian tree
-void CartesianTree::destroyTree(Node* root) {
+// Helper function to perform inorder traversal and fill elements into a vector
+void CartesianTree::inorderTraversal(Node* root, std::vector<int>& result) const {
 	if (root != nullptr) {
-		destroyTree(root->left);
-		destroyTree(root->right);
-		delete root;
+		inorderTraversal(root->left, result);
+		result.push_back(root->data);
+		inorderTraversal(root->right, result);
 	}
-}
-
-// Custom destructor to delete the Cartesian tree
-CartesianTree::~CartesianTree() {
-	destroyTree(root);
 }
 
 // Helper function for Euler tour traversal
@@ -205,6 +113,118 @@ void CartesianTree::addEncodedSequence(Node* root, std::vector<int>& result) con
 	}
 }
 
+// Helper function for Euler tour traversal to calculate appearance locations of nodes
+void CartesianTree::calculateAppearanceLocations(Node* root, int &index, std::vector<std::pair<int, int>>& appearanceLocations) const {
+	if (root != nullptr) {
+		std::pair<int, int> nodeAppearance(index, index);
+		int loc;
+		index++;
+
+		if (root->left != nullptr) {
+			calculateAppearanceLocations(root->left,  index,  appearanceLocations); // Visit left subtree
+			nodeAppearance.second = index++;
+		}
+		loc = appearanceLocations.size();
+		appearanceLocations.push_back(nodeAppearance);
+		if (root->right != nullptr) {
+			calculateAppearanceLocations(root->right, index,  appearanceLocations); // Visit right subtree
+			appearanceLocations[loc].second = index++;
+		}
+	}
+}
+
+// Destructor to delete the Cartesian tree
+void CartesianTree::destroyTree(Node* root) {
+	if (root != nullptr) {
+		destroyTree(root->left);
+		destroyTree(root->right);
+		delete root;
+	}
+}
+
+// Constructor
+CartesianTree::CartesianTree() : root(nullptr), rightmost(nullptr), size(0){}
+
+// Constructor to build tree from vector
+CartesianTree::CartesianTree(const std::vector<int>& elements) : root(nullptr), rightmost(nullptr), size(0) {
+	for (int elem : elements) {
+		addElement(elem);
+	}
+}
+
+// Custom destructor to delete the Cartesian tree
+CartesianTree::~CartesianTree() {
+	destroyTree(root);
+}
+
+// Function to add a new element to the Cartesian tree
+void CartesianTree::addElement(int value) {
+	root = insert(root, value);
+	++size; // Increment the size after adding an element
+}
+
+// Function to return all elements in the tree in a vector after inorder traversal
+std::vector<int> CartesianTree::getElementsInOrder() const {
+	std::vector<int> result;
+	inorderTraversal(root, result);
+	return result;
+}
+
+// Function to build a vector of random elements, add them to the Cartesian tree,
+// retrieve elements from the inorder traversal, and check if they match the initial vector
+bool CartesianTree::buildAndCheck(int numElements) {
+	std::vector<int> randomElements;
+	for (int i = 0; i < numElements; ++i) {
+		int randomValue = rand() % 100;
+		randomElements.push_back(randomValue);
+	}
+	for (int elem : randomElements) {
+		addElement(elem);
+	}
+
+	std::vector<int> inorderElements = getElementsInOrder();
+
+	if (randomElements.size() != inorderElements.size()) {
+		return false;
+	}
+	for (int i = 0; i < randomElements.size(); ++i) {
+		if (randomElements[i] != inorderElements[i]) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+// Function to print the Cartesian tree in inorder traversal
+void CartesianTree::printTree() const {
+	inorderTraversal(root);
+	std::cout << std::endl;
+}
+
+// Function to print the Cartesian tree level by level
+void CartesianTree::printLevels() const {
+	if (root == nullptr)
+		return;
+
+	std::queue<Node*> q;
+	q.push(root);
+
+	while (!q.empty()) {
+		int levelSize = q.size();
+		for (int i = 0; i < levelSize; ++i) {
+			Node* node = q.front();
+			q.pop();
+			std::cout << node->data << " ";
+			if (node->left != nullptr)
+				q.push(node->left);
+			if (node->right != nullptr)
+				q.push(node->right);
+		}
+		std::cout << std::endl;
+	}
+}
+
 // Function to perform Euler tour traversal
 std::vector<int> CartesianTree::eulerTour() const {
 	std::vector<int> result;
@@ -231,6 +251,26 @@ void CartesianTree::printEncodedEulerTour() const {
 	std::vector<int> encodedTour = encodeEulerTour();
 	for (int value : encodedTour) {
 		std::cout << value << " ";
+	}
+	std::cout << std::endl;
+}
+
+// Function to get the vector of pairs indicating appearance locations of nodes in Euler tour traversal
+std::vector<std::pair<int, int>> CartesianTree::getAppearanceLocations() const {
+	std::vector<std::pair<int, int>> appearanceLocations;
+	int index = 0;
+	calculateAppearanceLocations(root, index, appearanceLocations);
+	return appearanceLocations;
+}
+
+// Function to print the appearance locations of nodes in the Cartesian tree
+void CartesianTree::printAppearanceLocations() const {
+	std::vector<std::pair<int, int>> appearanceLocations;
+	int index = 0;
+	calculateAppearanceLocations(root, index, appearanceLocations);
+	std::cout << "Node Appearance Locations:" << std::endl;
+	for (const auto& pair : appearanceLocations) {
+		std::cout << "(" << pair.first << ", " << pair.second << ") ";
 	}
 	std::cout << std::endl;
 }
