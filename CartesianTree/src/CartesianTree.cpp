@@ -3,6 +3,7 @@
 #include <cstdlib> // for rand
 #include <ctime>   // for time
 #include <queue>   // for std::queue
+#include <cstdint> // For uint64_t
 
 // Function to insert a new node with the given value into the Cartesian tree
 Node* CartesianTree::insert(Node* root, int value) {
@@ -281,6 +282,22 @@ void CartesianTree::printAppearanceLocations() const {
 		std::cout << "(" << pair.first << ", " << pair.second << ") ";
 	}
 	std::cout << std::endl;
+}
+
+// Member function to store the encoded Euler tour into a 64-bit integer if the length of the encoded vector is than 64
+std::uint64_t CartesianTree::encodeEulerTourTo64Bit() const {
+	std::vector<int> encodedTour = encodeEulerTour();
+	std::uint64_t encodedInt64 = 0;
+
+	// Encode the Euler tour only if the vector size is less than or equal to 64
+	if (encodedTour.size() <= 64) {
+		for (int i = 0; i < encodedTour.size(); ++i) {
+			encodedInt64 <<= 1; // Shift the current value of encodedInt64 left by 1
+			encodedInt64 |= encodedTour[i]; // Bitwise OR with the current value of encodedTour[i]
+		}
+	}
+
+	return encodedInt64;
 }
 
 // Function to validate the CartesianTree by creating a new tree and calling build and validate function

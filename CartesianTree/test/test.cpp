@@ -45,6 +45,10 @@ int main(int argc, char** argv) {
 	// Print the vector of pairs
 	tree.printAppearanceLocations();
 
+	// Print the encoded Euler tour stored as a 64-bit integer
+	std::uint64_t encodedInt64 = tree.encodeEulerTourTo64Bit();
+	std::cout << "Encoded Euler tour as 64-bit integer: " << encodedInt64 << std::endl;
+
 	// Create a Cartesian tree from a randomly generated vector
 	std::vector<int> elements;
 	numElements = 10;//rand() % 10 + 1; // Random number of elements (1 to 10)
@@ -68,7 +72,11 @@ int main(int argc, char** argv) {
 	treeFromVector.printEncodedEulerTour();
 
 	// Print the vector of pairs
-	tree.printAppearanceLocations();
+	treeFromVector.printAppearanceLocations();
+
+	// Print the encoded Euler tour stored as a 64-bit integer
+	encodedInt64 = treeFromVector.encodeEulerTourTo64Bit();
+	std::cout << "Encoded Euler tour as 64-bit integer: " << encodedInt64 << std::endl;
 	
 	return 0;
 }
