@@ -13,7 +13,7 @@ RangeMin::RangeMin(unsigned int size) {
 	numWindows = static_cast<unsigned int>(std::ceil(static_cast<double>(n) / windowSize)); // Calculate the number of windows
 	findMinInWindows(); // Find the minimum value in each window
 	minArrays = std::move(MinArrays(minInWindow)); // Using move assignment operator for MinArrays
-	computeWindowETTourIndices(); // Compute the Euler tour indices location pairs for each window
+	computeWindowETTour(); // Compute the Euler tour indices location pairs for each window
 }
 
 RangeMin::RangeMin(const std::vector<int>& values) {
@@ -23,7 +23,7 @@ RangeMin::RangeMin(const std::vector<int>& values) {
 	numWindows = static_cast<unsigned int>(std::ceil(static_cast<double>(n) / windowSize)); // Calculate the number of windows
 	findMinInWindows(); // Find the minimum value in each window
 	minArrays = std::move(MinArrays(minInWindow)); // Using move assignment operator for MinArrays
-	computeWindowETTourIndices(); // Compute the Euler tour indices location pairs for each window
+	computeWindowETTour(); // Compute the Euler tour indices location pairs for each window
 }
 
 void RangeMin::fillRandomly() {
@@ -74,8 +74,9 @@ void RangeMin::validate() const {
 }
 
 // Function to compute the Euler tour indices location pairs for each window
-void RangeMin::computeWindowETTourIndices() {
+void RangeMin::computeWindowETTour() {
 	windowTourIndices.resize(numWindows); // Resize the vector to hold location pairs for each window
+	windowEulerTours.resize(numWindows); // Resize the vector to hold the Euler tour for each window
 
 	// Iterate through each window
 	for (unsigned int i = 0; i < numWindows; ++i) {
@@ -88,8 +89,20 @@ void RangeMin::computeWindowETTourIndices() {
 		// Get the appearance locations of nodes in the Cartesian tree
 		std::vector<std::pair<int, int>> locationPairs = cartesianTree.getAppearanceLocations();
 
-		// Store the appearance locations of the current window
+		// Get the Euler tour for the current window
+		std::vector<int> eulerTour = cartesianTree.eulerTour();
+
+		// Get the encoded 64-bit value of the Euler tour for the current window
+        std::uint64_t encodedEulerTour = cartesianTree.encodeEulerTourTo64Bit();
+
+		// Save the appearance locations of the current window
 		windowTourIndices[i] = std::move(locationPairs);
+
+		// Save the Euler tour for the current window
+		windowEulerTours.push_back(std::move(eulerTour));
+
+		// Save the encoded value for the current window
+        windowEncodedEulerTours.push_back(encodedEulerTour);
 	}
 }
 

@@ -14,6 +14,8 @@ private:
 	unsigned int numWindows; // Number of windows
 	MinArrays minArrays; // MinArrays object to store and compute minimum values in the range of two window
 	std::vector<std::vector<std::pair<int, int>>> windowTourIndices; // Vector to store location pairs in Euler tour for each window
+	std::vector<std::vector<int>> windowEulerTours; // Vector to store the Euler tour of each window
+    std::vector<std::uint64_t> windowEncodedEulerTours; // Vector to store the encoded 64-bit value of Euler tour for each window
 
 	// Helper function to fill the array with random elements
 	void fillRandomly();
@@ -22,7 +24,7 @@ private:
 	void findMinInWindows();
 
 	// Function to compute the Euler tour indices location pairs for each window
-	void computeWindowETTourIndices();
+	void computeWindowETTour();
 
 public:
 	// Constructors
