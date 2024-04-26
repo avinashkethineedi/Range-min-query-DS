@@ -42,6 +42,9 @@ public:
 	// Function to print the minimum value in each window
 	void printMinInWindow() const;
 
+	// Function to get Array size
+	unsigned int getArraySize() const;
+
 	// Function to get window size
 	unsigned int getWindowSize() const;
 
@@ -51,12 +54,13 @@ public:
 	// Function to get the lookup table size
 	std::size_t getLookupTableSize() const;
 
-	// Function to get the minimum value in each window
+	// Function to get the minimum value in each window as a vector of mins
 	std::vector<int> getMinInWindow() const;
 
 	// Function to validate the minArrays object
 	void validate() const;
 
+	// Function to print the element of a window
 	void printWindowIndices(unsigned int windowIndex) const;
 
 	// Function to calculate random indices within a random window and find the minimum
@@ -66,9 +70,16 @@ public:
 	int calculateMinInWindowRange(unsigned int i, unsigned int j) const;
 
 	// Function to perform a random number of tests and compare the results obtained from two functions
-	void performRandomTests(int numTests) const;
+	void performRandomWindowTests(int numTests) const;
 
+	// Function to print the lookuptable
 	void printLookupTable() const;
+
+	// Function to perform the range min queries in O(1)
+	int rangeMinQuery(unsigned int i, unsigned int j) const;
+
+	// Function to perform a random number of tests and compare the results obtained from two functions
+	void performRandomTests(int numTests) const;
 };
 
 #endif /* RANGEMIN_H */

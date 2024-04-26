@@ -19,6 +19,7 @@ int main(int argc, char **argv) {
 
 	// rangeMin.printArray();
 
+	std::cout << "Array Size: " << rangeMin.getArraySize() << std::endl;
 	std::cout << "Window Size: " << rangeMin.getWindowSize() << std::endl;
 	std::cout << "Number of Windows: " << rangeMin.getNumWindows() << std::endl;
 	std::cout << "Lookup Table size: " << rangeMin.getLookupTableSize() << std::endl;
@@ -29,7 +30,8 @@ int main(int argc, char **argv) {
 
 	// rangeMin.validate();
 	// rangeMin.printLookupTable();
-	rangeMin.performRandomTests(10000676);
+	rangeMin.performRandomWindowTests(1000);
+	rangeMin.performRandomTests(100000);
 
 	return 0;
 }

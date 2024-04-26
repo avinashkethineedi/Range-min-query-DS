@@ -31,7 +31,7 @@ RangeMin::RangeMin(const std::vector<int>& values) {
 
 void RangeMin::fillRandomly() {
 	for (unsigned int i = 0; i < n; ++i) {
-		arr[i] = rand() % 100; // Generate random elements (0 to 99)
+		arr[i] = rand();
 	}
 }
 
@@ -57,6 +57,10 @@ void RangeMin::printMinInWindow() const {
 	for (unsigned int i = 0; i < numWindows; ++i) {
 		std::cout << "Window " << i+1 << ": " << minInWindow[i] << std::endl;
 	}
+}
+
+unsigned int RangeMin::getArraySize() const {
+	return n;
 }
 
 unsigned int RangeMin::getWindowSize() const {
@@ -132,15 +136,12 @@ void RangeMin::computeLookupTable() {
 
 		// Count zeros and ones in the binary representation of i starting from msbPos
 		num = i;
-		int maxDiffPos = 0, maxDiff = -1, zeros = 0, ones = 0, diff;
+		int maxDiffPos = 0, maxDiff = -1, diff;
 		for (int currPos = msbPos-1; currPos >= 0; currPos--) {
 			if (num & (1 << (currPos)))
-				ones++;
+				diff--;
 			else
-				zeros++;
-
-			// Calculate the difference between zeros and ones
-			diff = zeros - ones;
+				diff++;
 
 			// Update maxDiffPos if a higher difference is found
 			if (diff > maxDiff) {
@@ -179,43 +180,29 @@ void RangeMin::printWindowIndices(unsigned int windowIndex) const {
 	std::cout << "encoded64bit: " << windowEncodedEulerTours[windowIndex] << std::endl;
 }
 
-// Function to calculate the minimum value between two random indices within the same window
+// Function to calculate the minimum value between two random indices
 int RangeMin::calculateMinInRandomIndices(unsigned int i, unsigned int j) const {
-	// Ensure that index1 is less than index2
+	// Ensure that i is less than j
 	if (i > j) {
 		std::swap(i, j);
 	}
 
-	// Calculate the window indices for i and j
-	unsigned int windowIdx_i = i / windowSize;
-	unsigned int windowIdx_j = j / windowSize;
-
-	// If index1 and index2 are in the same window, calculate the minimum in the range
-	if (windowIdx_i == windowIdx_j) {
-		int minValue = arr[i];
-		for (unsigned int idx = i + 1; idx <= j; ++idx) {
-			minValue = std::min(minValue, arr[idx]);
-		}
-		return minValue;
-	} else {
-		std::cout << "Indices (" << i << ", " << j << ") are not within the same window." << std::endl;
+	int minValue = arr[i];
+	for (unsigned int idx = i + 1; idx <= j; ++idx) {
+		minValue = std::min(minValue, arr[idx]);
 	}
-
-	// If index1 and index2 are in different windows, return -1
-	return -1;
+	return minValue;
 }
 
 // Function to calculate the minimum value within the range of a given window
 int RangeMin::calculateMinInWindowRange(unsigned int i, unsigned int j) const {
+	
+	// Calculate the window indices for i and j
 	unsigned int windowIdx_i = i / windowSize;
 	unsigned int windowIdx_j = j / windowSize;
 
 	i = i % windowSize;
 	j = j % windowSize;
-
-	if (i > j) {
-		std::swap(i, j);
-	}
 
 	int minValue = -1;
 
@@ -243,10 +230,10 @@ int RangeMin::calculateMinInWindowRange(unsigned int i, unsigned int j) const {
 	return minValue;
 }
 
-void RangeMin::performRandomTests(int numTests) const {
+void RangeMin::performRandomWindowTests(int numTests) const {
 	int passedTests = 0;
 
-	for (int i = 0; i < numTests; ++i) {
+	for (int test = 0; test < numTests; ++test) {
 
 		// Generate a random window index
 		unsigned int randomWindowIndex = rand() % numWindows;
@@ -256,22 +243,22 @@ void RangeMin::performRandomTests(int numTests) const {
 		unsigned int endIdx = std::min(startIdx + windowSize, n);
 
 		// Generate random indices within this window
-		unsigned int index1 = rand() % (endIdx - startIdx) + startIdx;
-		unsigned int index2 = rand() % (endIdx - startIdx) + startIdx;
+		unsigned int i = rand() % (endIdx - startIdx) + startIdx;
+		unsigned int j = rand() % (endIdx - startIdx) + startIdx;
 
-		if (index1 > index2) {
-			std::swap(index1, index2);
+		if (i > j) {
+			std::swap(i, j);
 		}
 
 		// Calculate the minimum value between the random indices using both methods
-		int min1 = calculateMinInRandomIndices(index1, index2);
-		int min2 = calculateMinInWindowRange(index1, index2);
+		int min1 = calculateMinInRandomIndices(i, j);
+		int min2 = calculateMinInWindowRange(i, j);
 
 		// Compare the results
 		if (min1 == min2) {
 			++passedTests;
 		} else {
-			std::cout << "Test failed: Indices (" << index1 % windowSize << ", " << index2 % windowSize << ") => "
+			std::cout << "Test failed: Indices (" << i % windowSize << ", " << j % windowSize << ") => "
 					  << "Actual: " << min1 << ", Expected: " << min2 << std::endl;
 		}
 	}
@@ -285,4 +272,78 @@ void RangeMin::printLookupTable() const {
 		std::cout << "Index " << " | " << i << " | " << std::bitset<std::numeric_limits<size_t>::digits>(i) << ": " 
 				  << lookupTable[i] << std::endl;
 	}
+}
+
+// Function to calculate the minimum value between two random indices
+int RangeMin::rangeMinQuery(unsigned int i, unsigned int j) const {
+
+	// Calculate the window indices for i and j
+	unsigned int windowIdx_i = i / windowSize;
+	unsigned int windowIdx_j = j / windowSize;
+
+	int min = -1;
+
+	// If the indices are in the same window, calculate the minimum using calculateMinInWindowRange
+	if (windowIdx_i == windowIdx_j) {
+		min = calculateMinInWindowRange(i, j);
+	} else if (windowIdx_i + 1 == windowIdx_j) { // If the indices are in adjacent windows
+		// Calculate the start and end indices of the windows
+		unsigned int startIdx_i = windowIdx_i * windowSize;
+		unsigned int endIdx_i = std::min(startIdx_i + windowSize, n);
+		unsigned int startIdx_j = windowIdx_j * windowSize;
+
+		// Calculate the minimum between the range of i and end index of its window
+		int min1 = calculateMinInWindowRange(i, endIdx_i - 1);
+		// Calculate the minimum between the start index of j's window and j
+		int min2 = calculateMinInWindowRange(startIdx_j, j);
+
+		// minimum of the two minimums
+		min = std::min(min1, min2);
+	} else {
+
+		// Calculate the start and end indices of the windows
+		unsigned int startIdx_i = windowIdx_i * windowSize;
+		unsigned int endIdx_i = std::min(startIdx_i + windowSize, n);
+		unsigned int startIdx_j = windowIdx_j * windowSize;
+
+		// Calculate the minimum between the range of i and end index of its window
+		int min1 = calculateMinInWindowRange(i, endIdx_i - 1);
+		// Calculate the minimum between the start index of j's window and j
+		int min2 = calculateMinInWindowRange(startIdx_j, j);
+		// Calculate the minimum between window i+1 to window j-1
+		int min3 = minArrays.range_min(windowIdx_i+1, windowIdx_j-1);
+		min = std::min(min1, min2);
+		min = std::min(min, min3);
+	}
+	return min;
+}
+
+
+void RangeMin::performRandomTests(int numTests) const {
+	int passedTests = 0;
+
+	for (int test = 0; test < numTests; ++test) {
+
+		// Generate random indices
+		unsigned int i = rand() % n;
+		unsigned int j = rand() % n;
+
+		if (i > j) {
+			std::swap(i, j);
+		}
+
+		// Calculate the minimum value between the random indices using both methods
+		int min1 = rangeMinQuery(i, j);
+		int min2 = calculateMinInRandomIndices(i, j);
+
+		// Compare the results
+		if (min1 == min2) {
+			++passedTests;
+		} else {
+			std::cout << "Test failed (" << test << "): Indices (" << i << ", " << j << ") => "
+					  << "Actual: " << min1 << ", Expected: " << min2 << std::endl;
+		}
+	}
+
+	std::cout << "Passed tests: " << passedTests << "/" << numTests << std::endl;
 }
