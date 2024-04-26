@@ -21,12 +21,15 @@ int main(int argc, char **argv) {
 
 	std::cout << "Window Size: " << rangeMin.getWindowSize() << std::endl;
 	std::cout << "Number of Windows: " << rangeMin.getNumWindows() << std::endl;
+	std::cout << "Lookup Table size: " << rangeMin.getLookupTableSize() << std::endl;
 
 	// rangeMin.printMinInWindow();
 
-	rangeMin.printWindowIndices(rangeMin.getNumWindows()-1);
+	// rangeMin.printWindowIndices(rangeMin.getNumWindows()-1);
 
-	rangeMin.validate();
+	// rangeMin.validate();
+	// rangeMin.printLookupTable();
+	rangeMin.performRandomTests(10000676);
 
 	return 0;
 }
