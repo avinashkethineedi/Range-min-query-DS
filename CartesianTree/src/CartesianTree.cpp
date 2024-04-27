@@ -3,7 +3,6 @@
 #include <cstdlib> // for rand
 #include <ctime>   // for time
 #include <queue>   // for std::queue
-#include <cstdint> // For uint64_t
 
 // Function to insert a new node with the given value into the Cartesian tree
 Node* CartesianTree::insert(Node* root, int value) {

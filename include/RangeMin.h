@@ -80,6 +80,9 @@ public:
 
 	// Function to perform a random number of tests and compare the results obtained from two functions
 	void performRandomTests(int numTests) const;
+
+	// Function to perform multiple random range minimum queries and time the execution
+	void timeRangeMinQueries(int numQueries);
 };
 
 #endif /* RANGEMIN_H */

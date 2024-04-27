@@ -263,7 +263,7 @@ void RangeMin::performRandomWindowTests(int numTests) const {
 		}
 	}
 
-	std::cout << "Passed tests: " << passedTests << "/" << numTests << std::endl;
+	std::cout << "(RangeMin Queries within a block) Passed tests: " << passedTests << "/" << numTests << std::endl;
 }
 
 void RangeMin::printLookupTable() const {
@@ -345,5 +345,24 @@ void RangeMin::performRandomTests(int numTests) const {
 		}
 	}
 
-	std::cout << "Passed tests: " << passedTests << "/" << numTests << std::endl;
+	std::cout << "(RangeMin Queries) Passed tests: " << passedTests << "/" << numTests << std::endl;
+}
+
+// Function to perform multiple random range minimum queries and time the execution
+void RangeMin::timeRangeMinQueries(int numQueries) {
+
+	// Perform random range minimum queries
+	for (int i = 0; i < numQueries; ++i) {
+		// Generate random indices
+		unsigned int randomIndex1 = rand() % n;
+		unsigned int randomIndex2 = rand() % n;
+
+		// Ensure randomIndex1 is less than randomIndex2
+		if (randomIndex1 > randomIndex2) {
+			std::swap(randomIndex1, randomIndex2);
+		}
+
+		// Call the rangeMinQuery function
+		int minVal = rangeMinQuery(randomIndex1, randomIndex2);
+	}
 }
