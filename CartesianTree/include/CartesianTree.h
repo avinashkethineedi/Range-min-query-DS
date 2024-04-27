@@ -2,6 +2,7 @@
 #define CARTESIANTREE_H
 
 #include <vector>
+#include <cstdint> // For uint64_t
 
 class Node {
 public:
@@ -44,7 +45,7 @@ public:
 	void printEncodedEulerTour() const; // Function to print the encoded Euler tour
 	std::vector<std::pair<int, int>> getAppearanceLocations() const;
 	void printAppearanceLocations() const;
-	std::uint64_t encodeEulerTourTo64Bit() const;
+	uint64_t encodeEulerTourTo64Bit() const;
 };
 
 bool validateTrees(int numValidations, int maxElements);

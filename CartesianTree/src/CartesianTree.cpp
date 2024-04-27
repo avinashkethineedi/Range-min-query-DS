@@ -285,9 +285,9 @@ void CartesianTree::printAppearanceLocations() const {
 }
 
 // Member function to store the encoded Euler tour into a 64-bit integer if the length of the encoded vector is than 64
-std::uint64_t CartesianTree::encodeEulerTourTo64Bit() const {
+uint64_t CartesianTree::encodeEulerTourTo64Bit() const {
 	std::vector<int> encodedTour = encodeEulerTour();
-	std::uint64_t encodedInt64 = 0;
+	uint64_t encodedInt64 = 0;
 
 	// Encode the Euler tour only if the vector size is less than or equal to 64
 	if (encodedTour.size() <= 64) {
