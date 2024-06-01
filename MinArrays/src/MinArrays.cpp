@@ -105,8 +105,8 @@ int MinArrays::range_min(int i, int j) const {
 		return -1; // Return a default value indicating failure
 	}
 	int size = j - i + 1;
-	int nextPower = static_cast<int>(std::log2(size)); // Find the power of 2 less than or equal to size
-	int nextSmallestPowerSize = std::pow(2, nextPower); // Size of the next-smallest power of 2
+	int nextPower = 31 - __builtin_clz(size); // static_cast<int>(std::log2(size)); // Find the power of 2 less than or equal to size
+	int nextSmallestPowerSize = 1<<nextPower; // std::pow(2, nextPower); // Size of the next-smallest power of 2
 	return std::min(arrays[nextPower][i], arrays[nextPower][j - nextSmallestPowerSize + 1]); // Return the minimum
 }
 
