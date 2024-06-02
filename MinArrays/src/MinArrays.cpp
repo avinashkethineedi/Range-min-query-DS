@@ -32,7 +32,7 @@ void MinArrays::fillAndCalculate(const std::vector<int>& values) {
 void MinArrays::calculateRemainingArrays() {
 	for (int i = 1; i <= logN; ++i) {
 		for (int j = 0; j < n; ++j) {
-			int power = std::pow(2, i - 1);
+			int power = 1 << (i - 1);// std::pow(2, i - 1);
 			arrays[i][j] = std::min(arrays[i - 1][j], arrays[i - 1][std::min(j + power, n - 1)]);
 		}
 	}
