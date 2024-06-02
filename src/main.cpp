@@ -38,8 +38,8 @@ void timeRangeMinQueries(int numQueries)
 void performTimingTests(RangeMin& rangeMin) {
 
 	// Vector to store the number of queries
-	// std::vector<int> numQueriesVec = {10, 100, 1000, 10000, 100000, 1000000, 10000000};
-	std::vector<int> numQueriesVec = {1000000, 2000000, 3000000, 4000000, 5000000, 6000000, 7000000, 8000000, 9000000, 10000000};
+	std::vector<int> numQueriesVec = {100000, 1000000, 10000000};
+	// std::vector<int> numQueriesVec = {1000000, 2000000, 3000000, 4000000, 5000000, 6000000, 7000000, 8000000, 9000000, 10000000};
 
 	// Vector to store timings
 	std::vector<long long> timings;

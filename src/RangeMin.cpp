@@ -97,7 +97,8 @@ void RangeMin::computeWindowETTour() {
 		unsigned int windowStartIndex = i * windowSize;
 
 		// Create a new Cartesian tree for the current window
-		CartesianTree cartesianTree(arr.begin() + windowStartIndex, arr.begin() + windowStartIndex + windowSize);
+		// CartesianTree cartesianTree(arr.begin() + windowStartIndex, arr.begin() + windowStartIndex + windowSize);
+		CartesianTree cartesianTree(arr.begin() + windowStartIndex, windowStartIndex + windowSize < n ? arr.begin() + windowStartIndex + windowSize : arr.end());
 
 		// Get the appearance locations of nodes in the Cartesian tree
 		std::vector<std::pair<int, int>> locationPairs = cartesianTree.getAppearanceLocations();
