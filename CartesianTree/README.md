@@ -7,8 +7,8 @@ This directory contains an implementation of a Cartesian Tree, a binary tree der
 ## Directory Structure
 
 ```
-CartesianTreeProject/
-├── CMakeLists.txt          # Build script for CMake, creates a shared library.
+CartesianTree/
+├── CMakeLists.txt          # Build script for CMake, creates a static library.
 ├── src/
 │   └── CartesianTree.cpp   # Source file for the Cartesian Tree implementation.
 ├── include/
@@ -24,7 +24,7 @@ CartesianTreeProject/
 
 Ensure you have CMake installed on your system to build the project. You can download and install CMake from [CMake.org](https://cmake.org/download/).
 
-### Building the Project
+### Building the Static Library
 
 1. Open a terminal and navigate to the CartesianTree directory.
 2. Create a build directory and navigate into it:
@@ -35,11 +35,11 @@ Ensure you have CMake installed on your system to build the project. You can dow
    ```
    cmake ..
    ```
-4. Build the project:
+4. Compile the Library:
    ```
    cmake --build .
    ```
-   This will create a shared library for the Cartesian Tree.
+   These steps compiles the source code into a static library for the Cartesian Tree, resulting in a `.a` file which can be linked with other applications.
 
 ### Building and Running Tests
 
